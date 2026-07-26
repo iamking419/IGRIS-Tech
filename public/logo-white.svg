@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="2048" height="2048">
+  <defs>
+    <linearGradient id="primaryGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00FFE0" />
+      <stop offset="60%" stop-color="#00C4BF" />
+      <stop offset="100%" stop-color="#009999" />
+    </linearGradient>
+
+    <linearGradient id="highlightGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#73FFF3" />
+      <stop offset="100%" stop-color="#00FFE0" />
+    </linearGradient>
+
+    <linearGradient id="sideGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00B3AC" />
+      <stop offset="100%" stop-color="#005B57" />
+    </linearGradient>
+
+    <linearGradient id="darkGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#007F79" />
+      <stop offset="100%" stop-color="#003D3A" />
+    </linearGradient>
+  </defs>
+
+  <g transform="translate(512, 512) scale(1.85)">
+    <!-- CENTER SEGMENT "I" -->
+    <path d="M 0,-130 L 22,-115 L 22,85 L 0,100 L -22,85 L -22,-115 Z" fill="#FFFFFF" />
+    <path d="M 0,-130 L 22,-115 L 0,-100 L -22,-115 Z" fill="#FFFFFF" opacity="0.9" />
+    <path d="M 0,-130 L 22,-115 L 22,85 L 0,100 Z" fill="#D0D0D0" />
+    <path d="M -22,-115 L 0,-130 L 22,-115" fill="none" stroke="#A6FFF8" stroke-width="2" opacity="0.8" />
+
+    <!-- TOP ROOF SEGMENT (Top stroke of "G") -->
+    <path d="M -80,-150 L 155,-15 L 155,22 L -80,-113 Z" fill="#FFFFFF" />
+    <path d="M -80,-150 L 155,-15 L 155,2 L -80,-133 Z" fill="#FFFFFF" />
+    <path d="M -80,-113 L 155,22 L 155,38 L -80,-97 Z" fill="#909090" />
+
+    <!-- LEFT VERTICAL SEGMENT (Left side of "G") -->
+    <path d="M -155,-85 L -115,-108 L -115,75 L -155,98 Z" fill="#FFFFFF" />
+    <path d="M -155,-85 L -115,-108 L -85,-91 L -125,-68 Z" fill="#FFFFFF" />
+    <path d="M -115,-108 L -115,75 L -85,92 L -85,-91 Z" fill="#D0D0D0" />
+
+    <!-- RIGHT VERTICAL SEGMENT (Right side of "G") -->
+    <path d="M 115,0 L 155,23 L 155,115 L 115,92 Z" fill="#FFFFFF" />
+    <path d="M 115,0 L 115,92 L 85,75 L 85,-17 Z" fill="#FFFFFF" opacity="0.3" />
+    <path d="M 155,23 L 155,115 L 175,103 L 175,11 Z" fill="#909090" />
+
+    <!-- BOTTOM V-SEGMENT (Bottom of "G") -->
+    <path d="M -80,60 L 0,165 L 155,75 L 155,115 L 0,205 L -80,150 Z" fill="#FFFFFF" />
+    <path d="M -80,60 L 0,165 L 155,75 L 125,58 L 0,130 L -50,88 Z" fill="#FFFFFF" opacity="0.35" />
+    <path d="M 0,205 L 155,115 L 155,135 L 0,225 Z" fill="#909090" />
+  </g>
+</svg>
