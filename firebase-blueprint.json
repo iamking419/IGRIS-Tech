@@ -1,0 +1,51 @@
+{
+  "entities": {
+    "BrandingConfig": {
+      "title": "Branding Configuration",
+      "description": "Global branding assets and settings for IGRIS Tech",
+      "type": "object",
+      "properties": {
+        "logoUrl": {
+          "type": "string",
+          "description": "URL or Data URL for company logo"
+        },
+        "faviconUrl": {
+          "type": "string",
+          "description": "URL or Data URL for browser favicon"
+        },
+        "companyName": {
+          "type": "string",
+          "description": "Official company name"
+        },
+        "themeColor": {
+          "type": "string",
+          "description": "Primary theme accent color hex"
+        },
+        "loadingLogoUrl": {
+          "type": "string",
+          "description": "Logo URL for app loading screen"
+        },
+        "loadingMessage": {
+          "type": "string",
+          "description": "Text displayed on loading screen"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Timestamp of last branding update"
+        }
+      },
+      "required": [
+        "logoUrl",
+        "faviconUrl",
+        "companyName",
+        "themeColor"
+      ]
+    }
+  },
+  "firestore": {
+    "/branding/current": {
+      "schema": "BrandingConfig",
+      "description": "Singleton document storing current global branding configuration"
+    }
+  }
+}

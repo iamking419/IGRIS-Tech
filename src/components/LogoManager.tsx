@@ -13,15 +13,19 @@ import {
   Eye, 
   Sparkles,
   ShieldAlert,
-  LogOut
+  LogOut,
+  Loader2
 } from "lucide-react";
-import IgrisLogo, { getCustomLogo } from "./IgrisLogo";
+import IgrisLogo from "./IgrisLogo";
+import { useBranding } from "../firebase";
 
 interface LogoManagerProps {
   onBackToHome?: () => void;
 }
 
 export default function LogoManager({ onBackToHome }: LogoManagerProps) {
+  const { logo, uploadAndApplyLogo, resetToDefault, isLoading: isBrandingLoading } = useBranding();
+
   // Authentication State
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(() => {
     try {
@@ -35,28 +39,16 @@ export default function LogoManager({ onBackToHome }: LogoManagerProps) {
   const [authError, setAuthError] = useState("");
 
   // Brand Manager States
-  const [currentCustomLogo, setCurrentCustomLogo] = useState<string | null>(getCustomLogo());
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [uploadedPreview, setUploadedPreview] = useState<string | null>(null);
   const [uploadedFileInfo, setUploadedFileInfo] = useState<{ name: string; sizeKB: string; type: string } | null>(null);
   const [uploadError, setUploadError] = useState("");
+  const [isUploading, setIsUploading] = useState(false);
   const [notification, setNotification] = useState<{ type: "success" | "info" | "error"; message: string } | null>(null);
   const [isDragging, setIsDragging] = useState(false);
   const [previewBg, setPreviewBg] = useState<"dark" | "light" | "grid">("dark");
 
   const fileInputRef = useRef<HTMLInputElement>(null);
-
-  // Sync state on custom logo updates
-  useEffect(() => {
-    const syncLogo = () => {
-      setCurrentCustomLogo(getCustomLogo());
-    };
-    window.addEventListener("igris_logo_updated", syncLogo);
-    window.addEventListener("storage", syncLogo);
-    return () => {
-      window.removeEventListener("igris_logo_updated", syncLogo);
-      window.removeEventListener("storage", syncLogo);
-    };
-  }, []);
 
   // Password Submission Handler
   const handleAuthSubmit = (e: React.FormEvent) => {
@@ -106,6 +98,8 @@ export default function LogoManager({ onBackToHome }: LogoManagerProps) {
       return;
     }
 
+    setSelectedFile(file);
+
     // Convert file to Base64 Data URL for live preview
     const reader = new FileReader();
     reader.onload = (e) => {
@@ -143,40 +137,56 @@ export default function LogoManager({ onBackToHome }: LogoManagerProps) {
     }
   };
 
-  // Apply Logo Handler
-  const handleApplyLogo = () => {
-    if (!uploadedPreview) return;
+  // Apply Logo Handler (Uploads to Firebase Storage & Syncs to Firestore & Favicon)
+  const handleApplyLogo = async () => {
+    if (!selectedFile && !uploadedPreview) return;
+
+    setIsUploading(true);
+    setUploadError("");
+    setNotification(null);
 
     try {
-      localStorage.setItem("igris_custom_logo", uploadedPreview);
-      window.dispatchEvent(new Event("igris_logo_updated"));
-      setCurrentCustomLogo(uploadedPreview);
+      if (selectedFile) {
+        await uploadAndApplyLogo(selectedFile);
+      } else if (uploadedPreview) {
+        // Fallback data URL apply
+        const response = await fetch(uploadedPreview);
+        const blob = await response.blob();
+        const file = new File([blob], "custom_logo.png", { type: blob.type || "image/png" });
+        await uploadAndApplyLogo(file);
+      }
+
       setUploadedPreview(null);
+      setSelectedFile(null);
       setUploadedFileInfo(null);
       setNotification({
         type: "success",
-        message: "Custom logo successfully applied globally across all application components!"
+        message: "Custom logo successfully saved to Firebase Storage and synchronized globally in Firestore & favicon!"
       });
-    } catch (err) {
+    } catch (err: any) {
       console.error(err);
-      setUploadError("Failed to save logo to local storage. File may be too large for browser storage.");
+      setUploadError(err.message || "Failed to upload logo to Firebase. Please try again.");
+    } finally {
+      setIsUploading(false);
     }
   };
 
   // Reset / Remove Custom Logo Handler
-  const handleResetLogo = () => {
+  const handleResetLogo = async () => {
+    setIsUploading(true);
     try {
-      localStorage.removeItem("igris_custom_logo");
-      window.dispatchEvent(new Event("igris_logo_updated"));
-      setCurrentCustomLogo(null);
+      await resetToDefault();
       setUploadedPreview(null);
+      setSelectedFile(null);
       setUploadedFileInfo(null);
       setNotification({
         type: "info",
-        message: "Custom logo removed. Restored default bundled IGRIS Tech logo globally."
+        message: "Custom logo removed. Restored default bundled IGRIS Tech logo and favicon globally in Firebase."
       });
     } catch (err) {
       console.error(err);
+    } finally {
+      setIsUploading(false);
     }
   };
 
@@ -348,14 +358,14 @@ export default function LogoManager({ onBackToHome }: LogoManagerProps) {
               <div className="flex items-center justify-between border-b border-white/5 pb-4">
                 <div>
                   <h3 className="font-display font-bold text-base text-white">Current Active Logo</h3>
-                  <p className="text-[11px] text-zinc-500 font-mono">System-wide active branding asset</p>
+                  <p className="text-[11px] text-zinc-500 font-mono">Firebase synchronized global branding asset</p>
                 </div>
                 <span className={`px-2.5 py-1 rounded-full text-[9px] font-mono font-bold uppercase tracking-wider ${
-                  currentCustomLogo 
+                  logo && logo !== "/logo.jpg"
                     ? "bg-emerald-500/10 border border-emerald-500/30 text-emerald-400" 
                     : "bg-zinc-800 border border-white/10 text-zinc-400"
                 }`}>
-                  {currentCustomLogo ? "Custom Override" : "Bundled Default"}
+                  {logo && logo !== "/logo.jpg" ? "Firebase Custom Logo" : "Bundled Default"}
                 </span>
               </div>
 
@@ -370,20 +380,21 @@ export default function LogoManager({ onBackToHome }: LogoManagerProps) {
                       IGRIS TECH
                     </span>
                     <span className="font-mono text-[10px] text-zinc-500 block">
-                      {currentCustomLogo ? "Source: Local Storage (igris_custom_logo)" : "Source: /logo.jpg"}
+                      {logo && logo !== "/logo.jpg" ? "Source: Firebase Storage & Firestore" : "Source: Bundled /logo.jpg"}
                     </span>
                   </div>
                 </div>
               </div>
 
               {/* Action: Remove / Reset Custom Logo */}
-              {currentCustomLogo ? (
+              {logo && logo !== "/logo.jpg" ? (
                 <button
                   type="button"
+                  disabled={isUploading}
                   onClick={handleResetLogo}
-                  className="w-full py-3 px-4 rounded-2xl bg-rose-500/10 hover:bg-rose-500/20 border border-rose-500/30 text-rose-400 font-mono text-xs font-bold transition-all cursor-pointer flex items-center justify-center gap-2"
+                  className="w-full py-3 px-4 rounded-2xl bg-rose-500/10 hover:bg-rose-500/20 border border-rose-500/30 text-rose-400 font-mono text-xs font-bold transition-all cursor-pointer flex items-center justify-center gap-2 disabled:opacity-50"
                 >
-                  <Trash2 className="w-4 h-4" />
+                  {isUploading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Trash2 className="w-4 h-4" />}
                   <span>Remove Custom Logo & Reset to Default</span>
                 </button>
               ) : (
@@ -397,13 +408,13 @@ export default function LogoManager({ onBackToHome }: LogoManagerProps) {
             <div className="bg-[#0A0A0A]/60 border border-white/5 rounded-3xl p-6 text-xs text-zinc-400 space-y-3 font-mono">
               <h4 className="font-bold text-white uppercase tracking-wider text-[11px] flex items-center gap-2">
                 <Sparkles className="w-3.5 h-3.5 text-[#00FF88]" />
-                <span>Global Storage Behavior</span>
+                <span>Firebase Storage & Firestore Sync</span>
               </h4>
               <p className="leading-relaxed">
-                When a custom logo is applied, it is encoded as a Data URL and saved to your browser&apos;s <code className="text-emerald-400">localStorage</code> under the key <code className="text-emerald-400">igris_custom_logo</code>.
+                When a custom logo is uploaded, it is stored in <code className="text-emerald-400">Firebase Storage</code>, and its download URL is synchronized across all clients via <code className="text-emerald-400">Firestore (branding/current)</code>.
               </p>
               <p className="leading-relaxed">
-                All logo instances across Navbar, Footer, and Scoper listen to custom state events and immediately update in real-time.
+                The global <code className="text-emerald-400">BrandingProvider</code> re-renders all logo components and browser favicons in real-time without requiring a page refresh.
               </p>
             </div>
           </div>
@@ -546,11 +557,12 @@ export default function LogoManager({ onBackToHome }: LogoManagerProps) {
                   <div className="flex flex-col sm:flex-row items-center gap-3 pt-2">
                     <button
                       type="button"
+                      disabled={isUploading}
                       onClick={handleApplyLogo}
-                      className="w-full sm:flex-1 bg-[#00FF88] hover:bg-emerald-300 text-black font-sans font-bold py-3.5 px-6 rounded-xl text-xs uppercase tracking-wider transition-all cursor-pointer shadow-lg shadow-[#00FF88]/20 flex items-center justify-center gap-2"
+                      className="w-full sm:flex-1 bg-[#00FF88] hover:bg-emerald-300 text-black font-sans font-bold py-3.5 px-6 rounded-xl text-xs uppercase tracking-wider transition-all cursor-pointer shadow-lg shadow-[#00FF88]/20 flex items-center justify-center gap-2 disabled:opacity-50"
                     >
-                      <CheckCircle2 className="w-4 h-4" />
-                      <span>Apply Logo</span>
+                      {isUploading ? <Loader2 className="w-4 h-4 animate-spin" /> : <CheckCircle2 className="w-4 h-4" />}
+                      <span>{isUploading ? "Uploading to Firebase..." : "Apply Logo"}</span>
                     </button>
 
                     <button

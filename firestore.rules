@@ -1,0 +1,25 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    function isValidBranding(data) {
+      return data.keys().hasAll(['logoUrl', 'faviconUrl', 'companyName', 'themeColor'])
+        && data.logoUrl is string && data.logoUrl.size() <= 2000000
+        && data.faviconUrl is string && data.faviconUrl.size() <= 2000000
+        && data.companyName is string && data.companyName.size() <= 200
+        && data.themeColor is string && data.themeColor.size() <= 50;
+    }
+
+    // Default deny
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Global branding document
+    match /branding/current {
+      allow read: if true;
+      allow write: if isValidBranding(request.resource.data);
+    }
+  }
+}

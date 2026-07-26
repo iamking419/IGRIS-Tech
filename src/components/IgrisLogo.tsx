@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useBranding, updateDOMFavicon } from "../firebase";
 
 interface IgrisLogoProps {
   className?: string;
@@ -15,30 +16,22 @@ export function getCustomLogo(): string | null {
   }
 }
 
+export function syncFavicon(customLogoUrl?: string | null) {
+  if (customLogoUrl !== undefined) {
+    updateDOMFavicon(customLogoUrl || "/favicon.ico");
+  } else {
+    const custom = getCustomLogo();
+    updateDOMFavicon(custom || "/favicon.ico");
+  }
+}
+
 export default function IgrisLogo({
   className = "w-8 h-8",
   size,
   showText = false,
   textClassName = "font-display font-bold tracking-tight text-lg text-white uppercase"
 }: IgrisLogoProps) {
-  const [logoSrc, setLogoSrc] = useState<string>(() => {
-    return getCustomLogo() || "/logo.jpg";
-  });
-
-  useEffect(() => {
-    const handleLogoUpdate = () => {
-      const custom = getCustomLogo();
-      setLogoSrc(custom || "/logo.jpg");
-    };
-
-    window.addEventListener("igris_logo_updated", handleLogoUpdate);
-    window.addEventListener("storage", handleLogoUpdate);
-
-    return () => {
-      window.removeEventListener("igris_logo_updated", handleLogoUpdate);
-      window.removeEventListener("storage", handleLogoUpdate);
-    };
-  }, []);
+  const { logo, companyName } = useBranding();
 
   const customStyle = size ? { width: size, height: size } : {};
 
@@ -49,15 +42,16 @@ export default function IgrisLogo({
         style={customStyle}
       >
         <img 
-          src={logoSrc} 
-          alt="IGRIS Tech Logo" 
+          src={logo || "/logo.jpg"} 
+          alt={`${companyName || "IGRIS Tech"} Logo`} 
           referrerPolicy="no-referrer"
           className="w-full h-full object-contain transition-transform duration-300 group-hover:scale-105"
         />
       </div>
       {showText && (
-        <span className={textClassName}>IGRIS TECH</span>
+        <span className={textClassName}>{companyName || "IGRIS TECH"}</span>
       )}
     </div>
   );
 }
+
