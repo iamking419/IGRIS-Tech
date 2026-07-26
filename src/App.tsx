@@ -42,17 +42,22 @@ export default function App() {
   });
 
   useEffect(() => {
-    const handlePopState = () => {
+    const handleUrlChange = () => {
       const path = window.location.pathname.toLowerCase();
-      if (path === "/logo" || path === "/logo/" || window.location.hash === "#/logo") {
+      const hash = window.location.hash.toLowerCase();
+      if (path === "/logo" || path === "/logo/" || hash === "#/logo" || hash === "#logo") {
         setView("logo");
       } else if (view === "logo") {
         setView("website");
       }
     };
 
-    window.addEventListener("popstate", handlePopState);
-    return () => window.removeEventListener("popstate", handlePopState);
+    window.addEventListener("popstate", handleUrlChange);
+    window.addEventListener("hashchange", handleUrlChange);
+    return () => {
+      window.removeEventListener("popstate", handleUrlChange);
+      window.removeEventListener("hashchange", handleUrlChange);
+    };
   }, [view]);
 
   const handleNavigateToSection = (sectionId: string) => {
