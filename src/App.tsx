@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "motion/react";
+import { motion, AnimatePresence, useScroll, useSpring } from "motion/react";
 import { 
   ArrowRight, 
   Sparkles, 
@@ -39,6 +39,14 @@ export default function App() {
       }
     }
     return "website";
+  });
+
+  // Top Scroll Progress Line
+  const { scrollYProgress } = useScroll();
+  const scaleX = useSpring(scrollYProgress, {
+    stiffness: 120,
+    damping: 30,
+    restDelta: 0.001
   });
 
   useEffect(() => {
@@ -88,6 +96,14 @@ export default function App() {
 
   return (
     <div className="relative min-h-screen text-gray-100 font-sans selection:bg-emerald-500/20 selection:text-emerald-300">
+      {/* Top High-Tech Scroll Progress Line */}
+      {view === "website" && (
+        <motion.div
+          className="fixed top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-emerald-500 via-teal-400 to-emerald-300 z-[100] origin-left shadow-[0_0_15px_rgba(16,185,129,0.8)] pointer-events-none"
+          style={{ scaleX }}
+        />
+      )}
+
       {/* Immersive background lights, grid patterns, floating dust */}
       <GridBackground />
 
@@ -119,13 +135,13 @@ export default function App() {
             className="pt-16"
           >
             {/* HERO SECTION */}
-            <section id="hero" className="relative pt-24 pb-16 sm:pb-24 px-6 max-w-7xl mx-auto flex flex-col items-center justify-center text-center z-10">
+            <section id="hero" className="relative pt-16 sm:pt-24 pb-12 sm:pb-24 px-4 sm:px-6 max-w-7xl mx-auto flex flex-col items-center justify-center text-center z-10">
               {/* Trust Badge / Tech Label */}
               <motion.div 
-                initial={{ opacity: 0, y: 15 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6 }}
-                className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-emerald-500/20 bg-emerald-500/5 text-emerald-400 text-[10px] uppercase tracking-[0.2em] font-bold mb-8"
+                initial={{ opacity: 0, y: 20, scale: 0.95 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+                className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-emerald-500/25 bg-emerald-500/10 text-emerald-400 text-[9px] sm:text-[10px] uppercase tracking-[0.15em] sm:tracking-[0.2em] font-bold mb-6 sm:mb-8 shadow-[0_0_15px_rgba(16,185,129,0.12)]"
               >
                 <span className="relative flex h-2 w-2">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
@@ -136,84 +152,105 @@ export default function App() {
 
               {/* Bold Headlines */}
               <motion.h1 
-                initial={{ opacity: 0, y: 15 }}
+                initial={{ opacity: 0, y: 25 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.1 }}
-                className="font-display font-bold text-5xl sm:text-7xl lg:text-[84px] tracking-tighter leading-[0.95] text-white max-w-5xl mb-6"
+                transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+                className="font-display font-bold text-3xl sm:text-7xl lg:text-[84px] tracking-tighter leading-[1.02] sm:leading-[0.95] text-white max-w-5xl mb-5 sm:mb-6"
               >
-                Architecting <br /><span className="text-zinc-600">High-Trust</span> Software.
+                Architecting <br className="hidden sm:inline" />
+                <span className="bg-gradient-to-r from-white via-zinc-300 to-zinc-500 bg-clip-text text-transparent">
+                  High-Trust
+                </span>{" "}
+                Software.
               </motion.h1>
 
               {/* Readable descriptive body */}
               <motion.p 
-                initial={{ opacity: 0, y: 15 }}
+                initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.2 }}
-                className="font-sans text-zinc-400 text-base sm:text-lg lg:text-xl leading-relaxed max-w-2xl mb-10"
+                transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+                className="font-sans text-zinc-400 text-sm sm:text-lg lg:text-xl leading-relaxed max-w-2xl mb-8 sm:mb-10"
               >
                 We design, build, deploy and maintain scalable software platforms with modern UI, secure backend architecture and long-term support.
               </motion.p>
 
               {/* Multi-state interactive buttons */}
               <motion.div 
-                initial={{ opacity: 0, y: 15 }}
+                initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.3 }}
-                className="flex flex-col sm:flex-row items-center justify-center gap-4 w-full sm:w-auto"
+                transition={{ duration: 0.8, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
+                className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 w-full sm:w-auto"
               >
-                <button
+                <motion.button
+                  whileHover={{ scale: 1.03, y: -2 }}
+                  whileTap={{ scale: 0.98 }}
                   onClick={() => setView("scoper")}
-                  className="w-full sm:w-auto flex items-center justify-center space-x-2 bg-white text-black font-sans font-bold text-sm px-8 py-3.5 rounded-full hover:bg-emerald-400 transition-all uppercase tracking-tighter shadow-[0_0_20px_rgba(16,185,129,0.25)] cursor-pointer"
+                  className="cta-halo w-full sm:w-auto flex items-center justify-center space-x-2 bg-white text-black font-sans font-bold text-xs sm:text-sm px-6 sm:px-8 py-3.5 rounded-full hover:bg-emerald-400 transition-colors uppercase tracking-tighter shadow-[0_0_25px_rgba(16,185,129,0.3)] cursor-pointer"
                 >
                   <Sparkles className="w-4 h-4 fill-black text-black" />
                   <span>Launch Project Planner</span>
-                </button>
+                </motion.button>
 
-                <button
+                <motion.button
+                  whileHover={{ scale: 1.03, y: -2 }}
+                  whileTap={{ scale: 0.98 }}
                   onClick={() => handleNavigateToSection("services")}
-                  className="w-full sm:w-auto flex items-center justify-center space-x-2 bg-[#0A0A0A] border border-white/5 hover:border-emerald-500/30 text-zinc-400 hover:text-white font-sans font-semibold text-sm px-8 py-3.5 rounded-full transition-all cursor-pointer"
+                  className="w-full sm:w-auto flex items-center justify-center space-x-2 bg-[#0A0A0A] border border-white/10 hover:border-emerald-500/40 text-zinc-300 hover:text-white font-sans font-semibold text-xs sm:text-sm px-6 sm:px-8 py-3.5 rounded-full transition-colors cursor-pointer"
                 >
                   <span>Explore Specialties</span>
                   <ArrowRight className="w-4 h-4" />
-                </button>
+                </motion.button>
               </motion.div>
 
               {/* Trust Metric Counters */}
-              <motion.div 
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 1, delay: 0.5 }}
-                className="grid grid-cols-2 md:grid-cols-4 gap-6 sm:gap-10 border-t border-white/5 pt-12 mt-16 w-full"
-              >
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-10 border-t border-white/5 pt-8 sm:pt-12 mt-10 sm:mt-16 w-full">
                 {[
                   { value: "25+", label: "Projects Delivered" },
                   { value: "4 Active", label: "Products Building" },
                   { value: "6+ Years", label: "Years Learning" },
                   { value: "100%", label: "Client Satisfaction" }
                 ].map((stat, idx) => (
-                  <div key={idx} className="text-center md:text-left bg-[#0A0A0A] border border-white/5 rounded-2xl p-4 sm:p-5 hover:border-emerald-500/20 transition-all">
-                    <div className="font-display font-bold text-lg sm:text-xl text-white mb-0.5">{stat.value}</div>
-                    <div className="text-xs font-mono text-zinc-500 uppercase tracking-widest">{stat.label}</div>
-                  </div>
+                  <motion.div 
+                    key={idx} 
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6, delay: 0.4 + idx * 0.08, ease: "easeOut" }}
+                    whileHover={{ y: -3 }}
+                    className="text-center md:text-left bg-[#080c10] sm:bg-[#0A0A0A] border border-white/5 rounded-xl sm:rounded-2xl p-3.5 sm:p-5 hover:border-emerald-500/30 transition-colors shadow-lg"
+                  >
+                    <div className="font-display font-bold text-base sm:text-xl text-white mb-0.5">{stat.value}</div>
+                    <div className="text-[10px] sm:text-xs font-mono text-zinc-500 uppercase tracking-widest">{stat.label}</div>
+                  </motion.div>
                 ))}
-              </motion.div>
+              </div>
             </section>
 
             {/* TRUST BRAND BAR */}
-            <section className="py-10 border-y border-white/5 bg-[#0A0A0A]/40 overflow-hidden relative">
-              <div className="max-w-7xl mx-auto px-6">
-                <p className="text-center font-mono text-[9px] uppercase tracking-widest text-zinc-500 mb-6">
+            <motion.section 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 1, delay: 0.6 }}
+              className="py-6 sm:py-10 border-y border-white/5 bg-[#0A0A0A]/40 overflow-hidden relative"
+            >
+              <div className="max-w-7xl mx-auto px-4 sm:px-6">
+                <p className="text-center font-mono text-[8px] sm:text-[9px] uppercase tracking-widest text-zinc-500 mb-4 sm:mb-6">
                   Supporting Next-Gen Technical Operations Worldwide
                 </p>
-                <div className="grid grid-cols-2 sm:grid-cols-5 gap-6 sm:gap-10 items-center justify-items-center opacity-30 select-none">
+                <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-10 opacity-40 select-none">
                   {["VESPER CAP", "KRYPTON HLT", "NEXUS SEC", "AETHER LABS", "OASIS DEVS"].map((brand, idx) => (
-                    <div key={idx} className="font-display font-bold text-xs sm:text-sm text-white tracking-widest uppercase">
+                    <motion.div 
+                      key={idx} 
+                      initial={{ opacity: 0, scale: 0.9 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{ duration: 0.5, delay: 0.7 + idx * 0.06 }}
+                      className="font-display font-bold text-[11px] sm:text-sm text-white tracking-widest uppercase px-2 py-1"
+                    >
                       {brand}
-                    </div>
+                    </motion.div>
                   ))}
                 </div>
               </div>
-            </section>
+            </motion.section>
 
             {/* CORE SERVICES */}
             <ServicesSection />
@@ -260,7 +297,7 @@ export default function App() {
                   <div className="lg:col-span-4 flex justify-start lg:justify-end">
                     <button
                       onClick={() => setView("scoper")}
-                      className="flex items-center space-x-2 bg-white text-black font-sans font-bold text-xs px-6 py-3.5 rounded-full hover:bg-emerald-400 hover:text-black transition-all uppercase tracking-tighter shadow-[0_0_20px_rgba(16,185,129,0.25)] cursor-pointer"
+                      className="cta-halo flex items-center space-x-2 bg-white text-black font-sans font-bold text-xs px-6 py-3.5 rounded-full hover:bg-emerald-400 hover:text-black transition-all uppercase tracking-tighter shadow-[0_0_20px_rgba(16,185,129,0.25)] cursor-pointer"
                     >
                       <Sparkles className="w-4 h-4 text-black fill-black" />
                       <span>Launch Project Planner</span>

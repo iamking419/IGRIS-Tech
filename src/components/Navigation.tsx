@@ -76,11 +76,11 @@ export default function Navigation({ currentView, setView, onNavigateToSection }
         initial={{ y: -100 }}
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
           scrolled 
-            ? "bg-[#050505]/95 backdrop-blur-md border-b border-white/5 py-3" 
+            ? "bg-[#040606]/85 backdrop-blur-xl border-b border-white/5 py-3 shadow-lg shadow-black/40" 
             : "bg-transparent py-6"
         }`}
       >
-        <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 flex items-center justify-between">
           {/* Logo on the left */}
           <button
             onClick={() => {
@@ -153,32 +153,38 @@ export default function Navigation({ currentView, setView, onNavigateToSection }
       <AnimatePresence>
         {mobileMenuOpen && (
           <motion.div
-            initial={{ opacity: 0, y: -20 }}
+            initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
+            exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.2 }}
-            className="fixed inset-x-0 top-[70px] z-40 p-6 mx-4 rounded-2xl bg-[#050505]/95 backdrop-blur-xl border border-white/10 shadow-2xl block lg:hidden"
+            className="fixed inset-x-0 top-[60px] z-40 p-5 mx-3 rounded-2xl bg-[#080d11]/95 border border-white/10 shadow-2xl block lg:hidden max-h-[80vh] overflow-y-auto"
           >
-            <div className="flex flex-col space-y-3">
-              {navItems.map((item) => (
-                <button
-                  key={item.label}
-                  onClick={() => handleNavClick(item.section)}
-                  className="w-full text-left py-2.5 text-sm font-semibold text-gray-300 hover:text-emerald-400 transition-colors border-b border-white/5"
-                >
-                  {item.label}
-                </button>
-              ))}
+            <div className="flex flex-col space-y-1">
+              {navItems.map((item) => {
+                const isSectionActive = currentView === "website" && activeSection === item.section;
+                return (
+                  <button
+                    key={item.label}
+                    onClick={() => handleNavClick(item.section)}
+                    className={`w-full text-left py-2.5 px-3 rounded-lg text-sm font-semibold transition-colors flex items-center justify-between ${
+                      isSectionActive ? "text-emerald-400 bg-emerald-500/10 font-bold" : "text-gray-300 hover:text-white hover:bg-white/5"
+                    }`}
+                  >
+                    <span>{item.label}</span>
+                    {isSectionActive && <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />}
+                  </button>
+                );
+              })}
               <button
                 onClick={() => {
                   setMobileMenuOpen(false);
                   setView("scoper");
                   window.scrollTo({ top: 0, behavior: "smooth" });
                 }}
-                className="w-full flex items-center justify-center space-x-2 bg-emerald-500 hover:bg-emerald-400 text-black font-sans font-bold py-3 rounded-xl mt-4 shadow-lg shadow-emerald-500/10 text-xs uppercase tracking-wider"
+                className="w-full flex items-center justify-center space-x-2 bg-emerald-500 hover:bg-emerald-400 text-black font-sans font-bold py-3 rounded-xl mt-3 shadow-lg shadow-emerald-500/10 text-xs uppercase tracking-wider cursor-pointer"
               >
                 <Sparkles className="w-3.5 h-3.5 fill-black" />
-                <span>Project Planner</span>
+                <span>Launch Project Planner</span>
                 <ArrowRight className="w-4 h-4" />
               </button>
             </div>

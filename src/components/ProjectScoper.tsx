@@ -830,10 +830,10 @@ export default function ProjectScoper({ onBackToHome }: ProjectScoperProps = {})
   ];
 
   return (
-    <div id="project-planner-container" className="max-w-4xl mx-auto px-4 py-8 sm:py-12 z-10 relative">
+    <div id="project-planner-container" className="max-w-4xl mx-auto px-4 py-8 sm:py-12 z-10 relative overflow-hidden">
       
       {/* Decorative Blur Backgrounds */}
-      <div className="absolute -top-12 left-1/2 -translate-x-1/2 w-[600px] h-[400px] bg-emerald-500/5 blur-[120px] pointer-events-none" />
+      <div className="absolute -top-12 left-1/2 -translate-x-1/2 w-full max-w-lg h-[300px] bg-emerald-500/5 blur-[60px] sm:blur-[120px] pointer-events-none overflow-hidden" />
 
       {/* PROGRESS TRACKER */}
       {currentStepIdx < STEPS.length && (
@@ -851,7 +851,7 @@ export default function ProjectScoper({ onBackToHome }: ProjectScoperProps = {})
           
           <div className="w-full bg-white/5 h-1.5 rounded-full overflow-hidden mb-6 border border-white/5">
             <motion.div 
-              className="h-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.3)]" 
+              className="h-full bg-emerald-400 sm:shadow-[0_0_8px_rgba(52,211,153,0.3)]" 
               animate={{ width: `${((currentStepIdx + 1) / STEPS.length) * 100}%` }}
               transition={{ duration: 0.3 }}
             />
@@ -890,7 +890,7 @@ export default function ProjectScoper({ onBackToHome }: ProjectScoperProps = {})
       )}
 
       {/* MAIN ANIMATED CARD ENGINE */}
-      <div className="glass-panel border border-white/5 bg-[#050505]/40 backdrop-blur-md rounded-2xl p-6 sm:p-10 relative overflow-hidden min-h-[520px] flex flex-col justify-between">
+      <div className="glass-panel border border-white/5 bg-[#080a0f] sm:bg-[#050505]/40 sm:backdrop-blur-md rounded-2xl p-6 sm:p-10 relative overflow-hidden min-h-[520px] flex flex-col justify-between">
         
         {/* System telemetry label */}
         <div className="absolute top-4 right-4 font-mono text-[9px] text-zinc-600 tracking-wider flex items-center gap-2">
@@ -918,11 +918,11 @@ export default function ProjectScoper({ onBackToHome }: ProjectScoperProps = {})
                     initial={{ scale: 0, rotate: -45 }}
                     animate={{ scale: 1, rotate: 0 }}
                     transition={{ type: "spring", stiffness: 260, damping: 20, delay: 0.1 }}
-                    className="relative w-20 h-20 rounded-full bg-[#00FF88]/10 border-2 border-[#00FF88] flex items-center justify-center text-[#00FF88] shadow-[0_0_35px_rgba(0,255,136,0.35)]"
+                    className="relative w-20 h-20 rounded-full bg-[#00FF88]/10 border-2 border-[#00FF88] flex items-center justify-center text-[#00FF88] sm:shadow-[0_0_35px_rgba(0,255,136,0.35)]"
                   >
                     <motion.div
-                      initial={{ scale: 0.8, opacity: 0 }}
-                      animate={{ scale: [1, 1.35, 1], opacity: [0.5, 0, 0.5] }}
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: [0.3, 0.7, 0.3] }}
                       transition={{ repeat: Infinity, duration: 2.5, ease: "easeInOut" }}
                       className="absolute inset-0 rounded-full border border-[#00FF88]"
                     />
@@ -939,7 +939,7 @@ export default function ProjectScoper({ onBackToHome }: ProjectScoperProps = {})
                   Inquiry Successfully Submitted!
                 </h2>
 
-                <div className="bg-[#00FF88]/5 border border-[#00FF88]/20 rounded-2xl p-5 sm:p-6 text-left space-y-3 relative overflow-hidden backdrop-blur-md shadow-xl">
+                <div className="bg-[#00FF88]/5 border border-[#00FF88]/20 rounded-2xl p-5 sm:p-6 text-left space-y-3 relative overflow-hidden bg-black/60 sm:backdrop-blur-md shadow-xl">
                   <p className="text-white text-sm sm:text-base font-sans leading-relaxed">
                     Your inquiry has been submitted! The assigned <strong className="text-[#00FF88] font-semibold">IGRIS Tech Lead Developer</strong> will review your technical specifications and contact you shortly via your preferred contact option: <strong className="text-white font-mono">{preferredChannel}</strong> {preferredNumber || preferredEmail || telegramUsername ? `(${preferredNumber || preferredEmail || telegramUsername})` : ""}.
                   </p>
@@ -957,7 +957,7 @@ export default function ProjectScoper({ onBackToHome }: ProjectScoperProps = {})
                 </div>
 
                 {/* AUTO-REDIRECT TIMER BANNER */}
-                <div className="bg-[#00FF88]/10 border border-[#00FF88]/30 rounded-2xl p-4 flex flex-col sm:flex-row items-center justify-between gap-4 backdrop-blur-md shadow-lg text-left">
+                <div className="bg-[#00FF88]/10 border border-[#00FF88]/30 rounded-2xl p-4 flex flex-col sm:flex-row items-center justify-between gap-4 bg-black/60 sm:backdrop-blur-md shadow-lg text-left">
                   <div className="flex items-center gap-3.5 w-full sm:w-auto">
                     <div className="w-10 h-10 rounded-xl bg-[#00FF88]/20 border border-[#00FF88]/40 flex items-center justify-center text-[#00FF88] font-mono font-bold text-sm shrink-0">
                       {redirectCountdown !== null ? `${redirectCountdown}s` : "✓"}

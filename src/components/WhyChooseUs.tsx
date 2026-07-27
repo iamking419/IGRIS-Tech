@@ -94,17 +94,23 @@ const techStack = [
 
 export default function WhyChooseUs() {
   return (
-    <section id="about" className="relative py-24 px-6 max-w-7xl mx-auto z-10 border-t border-white/5 scroll-mt-24 space-y-28">
-      <div className="absolute bottom-0 right-[10%] w-[350px] h-[350px] bg-emerald-500/5 blur-[120px] pointer-events-none" />
+    <section id="about" className="relative py-16 sm:py-24 px-4 sm:px-6 max-w-7xl mx-auto z-10 border-t border-white/5 scroll-mt-24 space-y-20 sm:space-y-28">
+      <div className="absolute bottom-0 right-[10%] w-[350px] h-[350px] bg-emerald-500/5 blur-[120px] pointer-events-none rounded-full" />
 
       {/* ----------------------------------------------------------------- */}
       {/* 1. HERO & BENEFITS BENTO GRID */}
       {/* ----------------------------------------------------------------- */}
-      <div className="space-y-16">
+      <div className="space-y-10 sm:space-y-16">
         {/* Header and intro */}
-        <div className="flex flex-col md:flex-row items-start md:items-end justify-between gap-6">
-          <div className="max-w-xl">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-emerald-500/20 bg-emerald-500/5 text-emerald-400 text-[10px] uppercase tracking-[0.2em] font-bold mb-4">
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-80px" }}
+          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+          className="flex flex-col md:flex-row items-start md:items-end justify-between gap-6"
+        >
+          <div className="max-w-xl space-y-3">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-emerald-500/20 bg-emerald-500/5 text-emerald-400 text-[10px] uppercase tracking-[0.2em] font-bold shadow-[0_0_15px_rgba(16,185,129,0.1)]">
               <span className="relative flex h-2 w-2">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
@@ -112,33 +118,34 @@ export default function WhyChooseUs() {
               <span>Why Choose Us</span>
             </div>
             <h2 className="font-display font-bold text-3xl sm:text-5xl text-white tracking-tight leading-tight">
-              Why Businesses <br />Choose IGRIS Tech
+              Why Businesses <br className="hidden sm:inline" />Choose IGRIS Tech
             </h2>
           </div>
-          <p className="text-zinc-400 text-sm sm:text-base font-sans max-w-md leading-relaxed">
+          <p className="text-zinc-400 text-xs sm:text-base font-sans max-w-md leading-relaxed">
             We partner with businesses to design, build, deploy and maintain reliable software. Our goal isn&apos;t just to launch projects—it&apos;s to help them grow over time.
           </p>
-        </div>
+        </motion.div>
 
         {/* Benefits Bento Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
           {benefits.map((benefit, idx) => {
             const IconComponent = benefit.icon;
             return (
               <motion.div
                 key={idx}
-                initial={{ opacity: 0, y: 15 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: idx * 0.05, duration: 0.5 }}
-                className="bg-[#0A0A0A] border border-white/5 rounded-2xl p-6 sm:p-8 flex flex-col justify-between hover:border-emerald-500/20 transition-all group"
+                initial={{ opacity: 0, y: 30, scale: 0.96 }}
+                whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                viewport={{ once: true, margin: "-50px" }}
+                transition={{ delay: idx * 0.07, duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
+                whileHover={{ y: -5, scale: 1.01 }}
+                className="bg-[#090A0E]/80 border border-white/10 hover:border-emerald-500/40 rounded-2xl p-5 sm:p-8 flex flex-col justify-between hover:shadow-[0_10px_30px_-10px_rgba(16,185,129,0.15)] transition-all duration-300 group"
               >
                 <div>
-                  <div className="w-10 h-10 rounded-xl bg-emerald-500/5 border border-emerald-500/15 flex items-center justify-center text-emerald-400 mb-6 group-hover:bg-emerald-500/10 group-hover:border-emerald-500/30 transition-all">
+                  <div className="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400 mb-5 sm:mb-6 group-hover:bg-emerald-500/20 group-hover:border-emerald-500/40 transition-all">
                     <IconComponent className="w-5 h-5" />
                   </div>
 
-                  <h3 className="font-display font-bold text-base text-white mb-2">
+                  <h3 className="font-display font-bold text-base sm:text-lg text-white mb-2">
                     {benefit.title}
                   </h3>
 
@@ -160,9 +167,15 @@ export default function WhyChooseUs() {
       {/* ----------------------------------------------------------------- */}
       {/* 2. OUR STORY SECTION */}
       {/* ----------------------------------------------------------------- */}
-      <div className="bg-[#0A0A0A] border border-white/10 rounded-3xl p-8 sm:p-12 relative overflow-hidden backdrop-blur-xl">
-        <div className="max-w-3xl space-y-6">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full border border-emerald-500/20 bg-emerald-500/5 text-emerald-400 text-[10px] font-mono font-bold uppercase tracking-widest">
+      <motion.div 
+        initial={{ opacity: 0, y: 25 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-60px" }}
+        transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+        className="bg-[#090A0E]/90 border border-white/10 hover:border-emerald-500/30 rounded-2xl sm:rounded-3xl p-6 sm:p-12 relative overflow-hidden backdrop-blur-xl shadow-xl transition-all"
+      >
+        <div className="max-w-3xl space-y-5 sm:space-y-6">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full border border-emerald-500/20 bg-emerald-500/5 text-emerald-400 text-[10px] font-mono font-bold uppercase tracking-widest shadow-[0_0_15px_rgba(16,185,129,0.1)]">
             <Rocket className="w-3.5 h-3.5" />
             <span>Our Story</span>
           </div>
@@ -171,7 +184,7 @@ export default function WhyChooseUs() {
             Building Meaningful Digital Products That Scale
           </h2>
 
-          <div className="space-y-4 text-zinc-300 text-sm sm:text-base leading-relaxed font-sans">
+          <div className="space-y-4 text-zinc-300 text-xs sm:text-base leading-relaxed font-sans">
             <p>
               IGRIS Tech was founded with a singular purpose: to bridge the gap between high-level software engineering and real business goals. We recognized that too many organizations struggle with fragmented technical partners, hidden costs, and software that degrades over time.
             </p>
@@ -183,35 +196,42 @@ export default function WhyChooseUs() {
             </p>
           </div>
         </div>
-      </div>
+      </motion.div>
 
       {/* ----------------------------------------------------------------- */}
       {/* 3. MISSION & VISION SECTION */}
       {/* ----------------------------------------------------------------- */}
       <div className="space-y-8">
-        <div className="text-center max-w-xl mx-auto">
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-80px" }}
+          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+          className="text-center max-w-xl mx-auto"
+        >
           <h2 className="font-display font-bold text-2xl sm:text-3xl text-white tracking-tight">
             Our Core Purpose
           </h2>
           <p className="text-xs sm:text-sm text-zinc-400 font-mono mt-1">
             Driven by engineering excellence and client success
           </p>
-        </div>
+        </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6">
           {/* Mission Card */}
           <motion.div
-            initial={{ opacity: 0, x: -15 }}
+            initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            className="bg-[#0A0A0A] border border-white/10 rounded-3xl p-8 backdrop-blur-xl flex flex-col justify-between space-y-6 hover:border-emerald-500/30 transition-all group"
+            viewport={{ once: true, margin: "-50px" }}
+            transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
+            className="bg-[#090A0E]/90 border border-white/10 hover:border-emerald-500/40 rounded-2xl sm:rounded-3xl p-6 sm:p-8 backdrop-blur-xl flex flex-col justify-between space-y-6 hover:shadow-[0_10px_30px_-10px_rgba(16,185,129,0.15)] transition-all group"
           >
             <div className="space-y-4">
               <div className="w-12 h-12 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400 group-hover:scale-110 transition-transform">
                 <Target className="w-6 h-6" />
               </div>
               <h3 className="font-display font-bold text-xl text-white">Our Mission</h3>
-              <p className="text-zinc-300 text-sm leading-relaxed font-sans">
+              <p className="text-zinc-300 text-xs sm:text-sm leading-relaxed font-sans">
                 To empower businesses by delivering robust, scalable, and beautifully engineered software solutions with complete transparency, on-time execution, and unwavering technical quality.
               </p>
             </div>
@@ -223,17 +243,18 @@ export default function WhyChooseUs() {
 
           {/* Vision Card */}
           <motion.div
-            initial={{ opacity: 0, x: 15 }}
+            initial={{ opacity: 0, x: 20 }}
             whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            className="bg-[#0A0A0A] border border-white/10 rounded-3xl p-8 backdrop-blur-xl flex flex-col justify-between space-y-6 hover:border-emerald-500/30 transition-all group"
+            viewport={{ once: true, margin: "-50px" }}
+            transition={{ duration: 0.65, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+            className="bg-[#090A0E]/90 border border-white/10 hover:border-emerald-500/40 rounded-2xl sm:rounded-3xl p-6 sm:p-8 backdrop-blur-xl flex flex-col justify-between space-y-6 hover:shadow-[0_10px_30px_-10px_rgba(16,185,129,0.15)] transition-all group"
           >
             <div className="space-y-4">
               <div className="w-12 h-12 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400 group-hover:scale-110 transition-transform">
                 <Compass className="w-6 h-6" />
               </div>
               <h3 className="font-display font-bold text-xl text-white">Our Vision</h3>
-              <p className="text-zinc-300 text-sm leading-relaxed font-sans">
+              <p className="text-zinc-300 text-xs sm:text-sm leading-relaxed font-sans">
                 To be the world&apos;s most trusted technical partner for ambitious companies, setting the global benchmark for developer efficiency, software reliability, and client collaboration.
               </p>
             </div>
@@ -248,9 +269,15 @@ export default function WhyChooseUs() {
       {/* ----------------------------------------------------------------- */}
       {/* 4. HOW WE WORK (SIX-STEP WORKFLOW) */}
       {/* ----------------------------------------------------------------- */}
-      <div className="space-y-12">
-        <div className="text-center max-w-2xl mx-auto space-y-2">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full border border-emerald-500/20 bg-emerald-500/5 text-emerald-400 text-[10px] font-mono font-bold uppercase tracking-widest">
+      <div className="space-y-10 sm:space-y-12">
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-80px" }}
+          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+          className="text-center max-w-2xl mx-auto space-y-2"
+        >
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full border border-emerald-500/20 bg-emerald-500/5 text-emerald-400 text-[10px] font-mono font-bold uppercase tracking-widest shadow-[0_0_15px_rgba(16,185,129,0.1)]">
             <span>⚙️ Structured Execution</span>
           </div>
           <h2 className="font-display font-bold text-2xl sm:text-4xl text-white tracking-tight">
@@ -259,21 +286,22 @@ export default function WhyChooseUs() {
           <p className="text-zinc-400 text-xs sm:text-sm font-mono">
             A proven six-step roadmap from initial concept to long-term scale
           </p>
-        </div>
+        </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
           {workflowSteps.map((stepItem, idx) => (
             <motion.div
               key={idx}
-              initial={{ opacity: 0, y: 15 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: idx * 0.05 }}
-              className="bg-[#0A0A0A] border border-white/10 rounded-2xl p-6 relative flex flex-col justify-between hover:border-emerald-500/30 transition-all group"
+              initial={{ opacity: 0, y: 25, scale: 0.96 }}
+              whileInView={{ opacity: 1, y: 0, scale: 1 }}
+              viewport={{ once: true, margin: "-40px" }}
+              transition={{ delay: idx * 0.06, duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+              whileHover={{ y: -4, scale: 1.01 }}
+              className="bg-[#090A0E]/80 border border-white/10 hover:border-emerald-500/40 rounded-2xl p-5 sm:p-6 relative flex flex-col justify-between hover:shadow-[0_10px_30px_-10px_rgba(16,185,129,0.15)] transition-all duration-300 group"
             >
               <div className="space-y-3">
                 <div className="flex items-center justify-between">
-                  <span className="font-mono font-bold text-xs text-emerald-400 px-2.5 py-1 rounded-lg bg-emerald-500/10 border border-emerald-500/20">
+                  <span className="font-mono font-bold text-[10px] text-emerald-400 px-2.5 py-1 rounded-lg bg-emerald-500/10 border border-emerald-500/20">
                     STEP {stepItem.step}
                   </span>
                   {idx < workflowSteps.length - 1 && (
@@ -281,7 +309,7 @@ export default function WhyChooseUs() {
                   )}
                 </div>
 
-                <h3 className="font-display font-bold text-lg text-white">
+                <h3 className="font-display font-bold text-base sm:text-lg text-white">
                   {stepItem.name}
                 </h3>
 
@@ -297,9 +325,15 @@ export default function WhyChooseUs() {
       {/* ----------------------------------------------------------------- */}
       {/* 5. TECHNOLOGIES WE USE GRID */}
       {/* ----------------------------------------------------------------- */}
-      <div className="space-y-10">
-        <div className="text-center max-w-2xl mx-auto space-y-2">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full border border-emerald-500/20 bg-emerald-500/5 text-emerald-400 text-[10px] font-mono font-bold uppercase tracking-widest">
+      <div className="space-y-8 sm:space-y-10">
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-80px" }}
+          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+          className="text-center max-w-2xl mx-auto space-y-2"
+        >
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full border border-emerald-500/20 bg-emerald-500/5 text-emerald-400 text-[10px] font-mono font-bold uppercase tracking-widest shadow-[0_0_15px_rgba(16,185,129,0.1)]">
             <span>🛠 Stack & Infrastructure</span>
           </div>
           <h2 className="font-display font-bold text-2xl sm:text-4xl text-white tracking-tight">
@@ -308,9 +342,9 @@ export default function WhyChooseUs() {
           <p className="text-zinc-400 text-xs sm:text-sm font-mono">
             Modern, tested toolchains built for performance, security, and developer velocity
           </p>
-        </div>
+        </motion.div>
 
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 sm:gap-4">
           {techStack.map((tech, idx) => {
             const IconComp = tech.icon;
             return (
@@ -318,18 +352,19 @@ export default function WhyChooseUs() {
                 key={idx}
                 initial={{ opacity: 0, scale: 0.95 }}
                 whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ delay: idx * 0.03 }}
-                className="bg-[#0A0A0A] border border-white/10 rounded-2xl p-4 flex items-center gap-3.5 hover:border-emerald-500/40 hover:bg-white/[0.02] transition-all group"
+                viewport={{ once: true, margin: "-30px" }}
+                transition={{ delay: idx * 0.03, duration: 0.4 }}
+                whileHover={{ y: -3, scale: 1.02 }}
+                className="bg-[#090A0E]/80 border border-white/10 hover:border-emerald-500/40 rounded-xl sm:rounded-2xl p-3.5 sm:p-4 flex items-center gap-3 sm:gap-3.5 hover:bg-white/[0.02] transition-all group"
               >
-                <div className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-emerald-400 group-hover:bg-emerald-500/10 group-hover:border-emerald-500/30 transition-all shrink-0">
-                  <IconComp className="w-5 h-5" />
+                <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-emerald-400 group-hover:bg-emerald-500/10 group-hover:border-emerald-500/30 transition-all shrink-0">
+                  <IconComp className="w-4 h-4 sm:w-5 sm:h-5" />
                 </div>
                 <div className="overflow-hidden">
-                  <h4 className="font-display font-bold text-sm text-white truncate">
+                  <h4 className="font-display font-bold text-xs sm:text-sm text-white truncate">
                     {tech.name}
                   </h4>
-                  <p className="font-mono text-[10px] text-zinc-500 truncate">
+                  <p className="font-mono text-[9px] sm:text-[10px] text-zinc-500 truncate">
                     {tech.category}
                   </p>
                 </div>

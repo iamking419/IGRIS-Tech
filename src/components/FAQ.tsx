@@ -58,8 +58,14 @@ export default function FAQ() {
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] bg-emerald-950/5 blur-[120px] pointer-events-none" />
 
       {/* Header */}
-      <div className="text-center max-w-2xl mx-auto mb-16">
-        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-emerald-500/20 bg-emerald-500/5 text-emerald-400 text-[10px] uppercase tracking-[0.2em] font-bold mb-4">
+      <motion.div 
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-80px" }}
+        transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+        className="text-center max-w-2xl mx-auto mb-16"
+      >
+        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-emerald-500/20 bg-emerald-500/5 text-emerald-400 text-[10px] uppercase tracking-[0.2em] font-bold mb-4 shadow-[0_0_15px_rgba(16,185,129,0.1)]">
           <span className="relative flex h-2 w-2">
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
             <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
@@ -72,7 +78,7 @@ export default function FAQ() {
         <p className="text-zinc-400 text-sm sm:text-base font-sans">
           Have questions about pricing models, technology governance, or code handoffs? Consult our official operational terms below.
         </p>
-      </div>
+      </motion.div>
 
       {/* Accordion Stack */}
       <div className="space-y-4">
@@ -80,10 +86,14 @@ export default function FAQ() {
           const isOpen = openIdx === idx;
 
           return (
-            <div 
+            <motion.div 
               key={idx}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-40px" }}
+              transition={{ delay: idx * 0.06, duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
               className={`bg-[#0A0A0A] border rounded-2xl transition-all overflow-hidden ${
-                isOpen ? "border-emerald-500/30 bg-[#050505]" : "border-white/5 hover:border-white/10"
+                isOpen ? "border-emerald-500/30 bg-[#050505] shadow-[0_0_20px_rgba(16,185,129,0.1)]" : "border-white/5 hover:border-white/10"
               }`}
             >
               <button
@@ -119,7 +129,7 @@ export default function FAQ() {
                   </motion.div>
                 )}
               </AnimatePresence>
-            </div>
+            </motion.div>
           );
         })}
       </div>

@@ -98,7 +98,13 @@ export default function ContactSection() {
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-[#00FF88]/5 blur-[160px] pointer-events-none rounded-full" />
 
       {/* SECTION HEADER */}
-      <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
+      <motion.div 
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-80px" }}
+        transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+        className="text-center max-w-3xl mx-auto mb-16 space-y-4"
+      >
         <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#00FF88]/10 border border-[#00FF88]/20 text-[#00FF88] font-mono text-[11px] uppercase tracking-widest font-bold">
           <Sparkles className="w-3.5 h-3.5 text-[#00FF88]" />
           <span>START A PROJECT</span>
@@ -111,12 +117,18 @@ export default function ContactSection() {
         <p className="text-zinc-400 text-sm sm:text-base leading-relaxed max-w-2xl mx-auto font-sans">
           Tell us about your project and we'll review your requirements before preparing a proposal. Most responses are sent within 24 hours.
         </p>
-      </div>
+      </motion.div>
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
         
         {/* LEFT INFORMATION PANEL */}
-        <div className="lg:col-span-5 space-y-8">
+        <motion.div 
+          initial={{ opacity: 0, x: -30 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true, margin: "-50px" }}
+          transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+          className="lg:col-span-5 space-y-8"
+        >
           
           {/* Contact Details Card */}
           <div className="bg-[#090A0E]/90 backdrop-blur-xl border border-white/10 rounded-[24px] p-6 sm:p-8 space-y-6 shadow-xl relative overflow-hidden">
@@ -225,10 +237,16 @@ export default function ContactSection() {
 
           </div>
 
-        </div>
+        </motion.div>
 
         {/* RIGHT FORM CONTAINER */}
-        <div className="lg:col-span-7 space-y-8">
+        <motion.div 
+          initial={{ opacity: 0, x: 30 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true, margin: "-50px" }}
+          transition={{ duration: 0.7, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+          className="lg:col-span-7 space-y-8"
+        >
           
           <div className="bg-[#090A0E]/90 backdrop-blur-xl border border-white/10 hover:border-white/20 rounded-[28px] p-6 sm:p-10 shadow-2xl relative overflow-hidden transition-all">
             
@@ -474,7 +492,7 @@ export default function ContactSection() {
             </ol>
           </div>
 
-        </div>
+        </motion.div>
 
       </div>
     </section>

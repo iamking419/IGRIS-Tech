@@ -70,8 +70,14 @@ export default function OurProcess() {
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[350px] h-[350px] bg-emerald-950/5 blur-[100px] pointer-events-none" />
 
       {/* Header text */}
-      <div className="text-center max-w-2xl mx-auto mb-16">
-        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-emerald-500/20 bg-emerald-500/5 text-emerald-400 text-[10px] uppercase tracking-[0.2em] font-bold mb-4">
+      <motion.div 
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-80px" }}
+        transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+        className="text-center max-w-2xl mx-auto mb-16"
+      >
+        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-emerald-500/20 bg-emerald-500/5 text-emerald-400 text-[10px] uppercase tracking-[0.2em] font-bold mb-4 shadow-[0_0_15px_rgba(16,185,129,0.1)]">
           <span className="relative flex h-2 w-2">
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
             <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
@@ -84,36 +90,50 @@ export default function OurProcess() {
         <p className="text-zinc-400 text-sm sm:text-base font-sans">
           From first request to global live operations, we engineer custom solutions with extreme transparency and predictable outcomes.
         </p>
-      </div>
+      </motion.div>
 
       {/* Horizontal Timeline Layout (Desktop & Tablet) */}
-      <div className="hidden lg:block relative mb-12">
+      <motion.div 
+        initial={{ opacity: 0, y: 25 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-50px" }}
+        transition={{ duration: 0.7, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+        className="hidden lg:block relative mb-12"
+      >
         {/* Progress Line Bar */}
         <div className="absolute top-[28px] left-[5%] right-[5%] h-0.5 bg-white/5 z-0">
           <motion.div 
             initial={{ width: "0%" }}
             whileInView={{ width: `${((activeStep - 1) / (steps.length - 1)) * 100}%` }}
             viewport={{ once: true }}
-            className="h-full bg-gradient-to-r from-emerald-500 to-teal-400 transition-all duration-300"
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            className="h-full bg-gradient-to-r from-emerald-500 via-teal-400 to-cyan-400 shadow-[0_0_10px_rgba(16,185,129,0.8)]"
           />
         </div>
 
         <div className="grid grid-cols-7 gap-4 relative z-10">
-          {steps.map((step) => {
+          {steps.map((step, idx) => {
             const IconComponent = step.icon;
             const isCompleted = step.id < activeStep;
             const isActive = step.id === activeStep;
 
             return (
-              <div key={step.id} className="text-center group">
+              <motion.div 
+                key={step.id} 
+                initial={{ opacity: 0, y: 15 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: idx * 0.08 }}
+                className="text-center group"
+              >
                 <button
                   onClick={() => setActiveStep(step.id)}
                   className={`w-14 h-14 rounded-full flex items-center justify-center border transition-all duration-300 mx-auto cursor-pointer ${
                     isActive
-                      ? "bg-white border-white text-black scale-110 shadow-[0_0_20px_rgba(16,185,129,0.2)]"
+                      ? "bg-white border-white text-black scale-110 shadow-[0_0_20px_rgba(16,185,129,0.3)]"
                       : isCompleted
                       ? "bg-emerald-500/10 border-emerald-500/30 text-emerald-400"
-                      : "bg-[#050505] border-white/5 text-zinc-500 hover:border-white/15"
+                      : "bg-[#050505] border-white/5 text-zinc-500 hover:border-white/15 hover:text-white"
                   }`}
                 >
                   <IconComponent className="w-5 h-5" />
@@ -126,11 +146,11 @@ export default function OurProcess() {
                     {step.title}
                   </p>
                 </div>
-              </div>
+              </motion.div>
             );
           })}
         </div>
-      </div>
+      </motion.div>
 
       {/* Active Step Detailed Showcase Grid */}
       <div className="bg-[#0A0A0A] border border-white/5 rounded-3xl p-6 sm:p-10 relative overflow-hidden">

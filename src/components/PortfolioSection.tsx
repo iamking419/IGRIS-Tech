@@ -146,15 +146,15 @@ export default function PortfolioSection({ onLaunchScoper }: PortfolioSectionPro
   };
 
   return (
-    <section id="portfolio" className="py-24 px-4 sm:px-6 max-w-7xl mx-auto relative z-10 scroll-mt-24">
+    <section id="portfolio" className="py-16 sm:py-24 px-4 sm:px-6 max-w-7xl mx-auto relative z-10 scroll-mt-24">
       
       {/* Background Subtle Accent */}
-      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[900px] h-[450px] bg-[#00FF88]/5 blur-[150px] pointer-events-none rounded-full" />
+      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[350px] sm:w-[900px] h-[250px] sm:h-[450px] bg-emerald-500/5 blur-[100px] sm:blur-[150px] pointer-events-none rounded-full" />
 
       {/* HEADER SECTION */}
-      <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
-        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#00FF88]/10 border border-[#00FF88]/20 text-[#00FF88] font-mono text-[11px] uppercase tracking-widest font-bold">
-          <Globe className="w-3.5 h-3.5 text-[#00FF88]" />
+      <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-16 space-y-3 sm:space-y-4">
+        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 font-mono text-[10px] sm:text-[11px] uppercase tracking-widest font-bold">
+          <Globe className="w-3.5 h-3.5 text-emerald-400" />
           <span>OUR WORK</span>
         </div>
 
@@ -162,15 +162,15 @@ export default function PortfolioSection({ onLaunchScoper }: PortfolioSectionPro
           Selected Work
         </h2>
 
-        <p className="text-zinc-400 text-sm sm:text-base leading-relaxed max-w-2xl mx-auto font-sans">
+        <p className="text-zinc-400 text-xs sm:text-base leading-relaxed max-w-2xl mx-auto font-sans">
           Every project represents our commitment to thoughtful design, scalable engineering and exceptional user experiences. From business websites to experimental AI projects, each solution is crafted to solve real problems with modern technology.
         </p>
       </div>
 
       {/* INTERACTIVE FILTERS */}
-      <div className="flex flex-wrap items-center justify-center gap-2 mb-16">
+      <div className="flex flex-wrap items-center justify-center gap-2 mb-10 sm:mb-16">
         <div className="inline-flex items-center gap-1.5 px-3 py-2 text-zinc-500 text-xs font-mono uppercase tracking-wider mr-2 hidden sm:flex">
-          <Filter className="w-3.5 h-3.5 text-[#00FF88]" />
+          <Filter className="w-3.5 h-3.5 text-emerald-400" />
           <span>Filter By:</span>
         </div>
         {FILTER_OPTIONS.map((filter) => {
@@ -179,9 +179,9 @@ export default function PortfolioSection({ onLaunchScoper }: PortfolioSectionPro
             <button
               key={filter}
               onClick={() => setActiveFilter(filter)}
-              className={`px-4 py-2 rounded-full text-xs font-mono transition-all duration-300 cursor-pointer ${
+              className={`px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-full text-xs font-mono transition-all duration-300 cursor-pointer ${
                 isActive
-                  ? "bg-[#00FF88] text-black font-bold shadow-[0_0_20px_rgba(0,255,136,0.3)] scale-105"
+                  ? "bg-emerald-500 text-black font-bold shadow-[0_0_20px_rgba(16,185,129,0.3)]"
                   : "bg-white/[0.03] border border-white/10 text-zinc-400 hover:text-white hover:border-white/20 hover:bg-white/[0.06]"
               }`}
             >
@@ -192,17 +192,17 @@ export default function PortfolioSection({ onLaunchScoper }: PortfolioSectionPro
       </div>
 
       {/* MAIN CONTENT CONTAINERS */}
-      <div className="space-y-20">
+      <div className="space-y-12 sm:space-y-20">
 
         {/* CLIENT PROJECTS SECTION */}
         {clientProjects.length > 0 && (
-          <div className="space-y-8">
-            <div className="flex items-center gap-4 border-b border-white/10 pb-4">
-              <div className="w-2.5 h-2.5 rounded-full bg-[#00FF88]" />
-              <h3 className="font-display font-bold text-xl sm:text-2xl text-white uppercase tracking-wider">
+          <div className="space-y-6 sm:space-y-8">
+            <div className="flex items-center gap-3 sm:gap-4 border-b border-white/10 pb-3 sm:pb-4">
+              <div className="w-2.5 h-2.5 rounded-full bg-emerald-400" />
+              <h3 className="font-display font-bold text-lg sm:text-2xl text-white uppercase tracking-wider">
                 CLIENT PROJECTS
               </h3>
-              <span className="text-xs font-mono text-zinc-500 bg-white/5 border border-white/10 px-2.5 py-0.5 rounded-full">
+              <span className="text-[10px] sm:text-xs font-mono text-zinc-500 bg-white/5 border border-white/10 px-2.5 py-0.5 rounded-full">
                 {clientProjects.length} {clientProjects.length === 1 ? 'Project' : 'Projects'}
               </span>
             </div>
@@ -212,7 +212,7 @@ export default function PortfolioSection({ onLaunchScoper }: PortfolioSectionPro
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true, margin: "-50px" }}
-              className="grid grid-cols-1 lg:grid-cols-3 gap-8"
+              className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8"
             >
               <AnimatePresence mode="popLayout">
                 {clientProjects.map((project) => (
@@ -225,13 +225,13 @@ export default function PortfolioSection({ onLaunchScoper }: PortfolioSectionPro
 
         {/* INTERNAL PROJECTS SECTION */}
         {internalProjects.length > 0 && (
-          <div className="space-y-8">
-            <div className="flex items-center gap-4 border-b border-white/10 pb-4">
-              <div className="w-2.5 h-2.5 rounded-full bg-[#00FF88] animate-pulse" />
-              <h3 className="font-display font-bold text-xl sm:text-2xl text-white uppercase tracking-wider">
+          <div className="space-y-6 sm:space-y-8">
+            <div className="flex items-center gap-3 sm:gap-4 border-b border-white/10 pb-3 sm:pb-4">
+              <div className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse" />
+              <h3 className="font-display font-bold text-lg sm:text-2xl text-white uppercase tracking-wider">
                 INTERNAL PROJECTS
               </h3>
-              <span className="text-xs font-mono text-zinc-500 bg-white/5 border border-white/10 px-2.5 py-0.5 rounded-full">
+              <span className="text-[10px] sm:text-xs font-mono text-zinc-500 bg-white/5 border border-white/10 px-2.5 py-0.5 rounded-full">
                 {internalProjects.length} {internalProjects.length === 1 ? 'Project' : 'Projects'}
               </span>
             </div>
@@ -241,7 +241,7 @@ export default function PortfolioSection({ onLaunchScoper }: PortfolioSectionPro
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true, margin: "-50px" }}
-              className="grid grid-cols-1 lg:grid-cols-3 gap-8"
+              className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8"
             >
               <AnimatePresence mode="popLayout">
                 {internalProjects.map((project) => (
@@ -254,13 +254,13 @@ export default function PortfolioSection({ onLaunchScoper }: PortfolioSectionPro
 
         {/* EMPTY FILTER STATE */}
         {clientProjects.length === 0 && internalProjects.length === 0 && (
-          <div className="text-center py-16 bg-[#090A0E] border border-white/10 rounded-2xl p-8">
+          <div className="text-center py-12 bg-[#090A0E] border border-white/10 rounded-2xl p-6">
             <p className="text-zinc-400 text-sm font-mono mb-4">
               No projects found matching the filter "{activeFilter}".
             </p>
             <button
               onClick={() => setActiveFilter("All")}
-              className="px-5 py-2 rounded-full bg-[#00FF88] text-black text-xs font-mono font-bold cursor-pointer"
+              className="px-5 py-2 rounded-full bg-emerald-500 text-black text-xs font-mono font-bold cursor-pointer"
             >
               Reset Filter
             </button>
@@ -270,30 +270,30 @@ export default function PortfolioSection({ onLaunchScoper }: PortfolioSectionPro
       </div>
 
       {/* BOTTOM CTA SECTION */}
-      <div className="mt-24 pt-16 border-t border-white/10">
-        <div className="bg-[#090A0E]/90 border border-white/10 hover:border-[#00FF88]/30 rounded-[28px] p-8 sm:p-12 text-center max-w-4xl mx-auto relative overflow-hidden shadow-2xl transition-all">
+      <div className="mt-16 sm:mt-24 pt-12 sm:pt-16 border-t border-white/10">
+        <div className="bg-[#090A0E]/90 border border-white/10 hover:border-emerald-500/30 rounded-2xl sm:rounded-[28px] p-6 sm:p-12 text-center max-w-4xl mx-auto relative overflow-hidden shadow-2xl transition-all">
           
           {/* Subtle Glow Background */}
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[250px] bg-[#00FF88]/10 blur-[100px] pointer-events-none rounded-full" />
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] sm:w-[500px] h-[150px] sm:h-[250px] bg-emerald-500/10 blur-[80px] pointer-events-none rounded-full" />
 
-          <div className="relative z-10 space-y-6">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#00FF88]/10 border border-[#00FF88]/20 text-[#00FF88] font-mono text-[11px] uppercase tracking-widest font-bold">
-              <Sparkles className="w-3.5 h-3.5 text-[#00FF88]" />
+          <div className="relative z-10 space-y-4 sm:space-y-6">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 font-mono text-[10px] sm:text-[11px] uppercase tracking-widest font-bold">
+              <Sparkles className="w-3.5 h-3.5 text-emerald-400" />
               <span>START YOUR JOURNEY</span>
             </div>
 
-            <h3 className="font-display font-bold text-2xl sm:text-4xl text-white tracking-tight">
+            <h3 className="font-display font-bold text-xl sm:text-4xl text-white tracking-tight">
               Ready to Build Something Exceptional?
             </h3>
 
-            <p className="text-zinc-400 text-sm sm:text-base leading-relaxed max-w-2xl mx-auto font-sans">
+            <p className="text-zinc-400 text-xs sm:text-base leading-relaxed max-w-2xl mx-auto font-sans">
               Whether you're launching a startup, modernizing your business or building an entirely new digital product, IGRIS Tech is ready to help transform your ideas into reality.
             </p>
 
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 pt-2 sm:pt-4">
               <button
                 onClick={handleLaunchPlanner}
-                className="w-full sm:w-auto flex items-center justify-center gap-2 bg-[#00FF88] hover:bg-[#00e67a] text-black font-sans font-bold text-xs uppercase tracking-wider px-8 py-4 rounded-full transition-all duration-300 shadow-[0_0_25px_rgba(0,255,136,0.3)] cursor-pointer hover:scale-105"
+                className="w-full sm:w-auto flex items-center justify-center gap-2 bg-emerald-400 hover:bg-emerald-300 text-black font-sans font-bold text-xs uppercase tracking-wider px-6 sm:px-8 py-3.5 sm:py-4 rounded-full transition-all duration-300 shadow-[0_0_25px_rgba(16,185,129,0.3)] cursor-pointer"
               >
                 <Sparkles className="w-4 h-4 text-black fill-black" />
                 <span>Launch Project Planner</span>
@@ -301,7 +301,7 @@ export default function PortfolioSection({ onLaunchScoper }: PortfolioSectionPro
 
               <button
                 onClick={handleContactUs}
-                className="w-full sm:w-auto flex items-center justify-center gap-2 bg-white/[0.04] hover:bg-white/10 border border-white/10 hover:border-white/20 text-white font-sans font-bold text-xs uppercase tracking-wider px-8 py-4 rounded-full transition-all duration-300 cursor-pointer"
+                className="w-full sm:w-auto flex items-center justify-center gap-2 bg-white/[0.04] hover:bg-white/10 border border-white/10 hover:border-white/20 text-white font-sans font-bold text-xs uppercase tracking-wider px-6 sm:px-8 py-3.5 sm:py-4 rounded-full transition-all duration-300 cursor-pointer"
               >
                 <span>Contact IGRIS Tech</span>
                 <ArrowUpRight className="w-4 h-4 text-zinc-400" />
@@ -321,18 +321,18 @@ function ProjectCard({ project, variants }: { project: ProjectItem; variants: Va
     <motion.div
       layout
       variants={variants}
-      whileHover={{ y: -6 }}
+      whileHover={{ y: -4 }}
       transition={{ duration: 0.3, ease: "easeOut" }}
-      className="group relative bg-[#090A0E]/80 backdrop-blur-xl border border-white/10 hover:border-[#00FF88]/50 rounded-[24px] p-6 sm:p-8 flex flex-col justify-between transition-all duration-300 shadow-xl hover:shadow-[0_12px_40px_-10px_rgba(0,255,136,0.15)] overflow-hidden"
+      className="group relative bg-[#090A0E]/80 border border-white/10 hover:border-emerald-500/50 rounded-2xl p-5 sm:p-8 flex flex-col justify-between transition-all duration-300 shadow-xl hover:shadow-[0_12px_40px_-10px_rgba(16,185,129,0.15)] overflow-hidden"
     >
       {/* Top Accent Line */}
-      <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[#00FF88]/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+      <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-emerald-500/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
       <div>
         {/* CARD TOP: Name & Badges */}
         <div className="flex items-start justify-between mb-4 gap-3">
           <div>
-            <h4 className="font-display font-bold text-2xl sm:text-3xl text-white group-hover:text-[#00FF88] transition-colors duration-300 tracking-tight">
+            <h4 className="font-display font-bold text-xl sm:text-3xl text-white group-hover:text-emerald-400 transition-colors duration-300 tracking-tight">
               {project.name}
             </h4>
           </div>
@@ -342,10 +342,10 @@ function ProjectCard({ project, variants }: { project: ProjectItem; variants: Va
               {project.industry}
             </span>
 
-            <span className="inline-flex items-center gap-1.5 text-[10px] font-mono bg-[#00FF88]/10 border border-[#00FF88]/20 text-[#00FF88] px-2.5 py-1 rounded-full uppercase tracking-wider font-semibold">
+            <span className="inline-flex items-center gap-1.5 text-[10px] font-mono bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 px-2.5 py-1 rounded-full uppercase tracking-wider font-semibold">
               <span className="relative flex h-1.5 w-1.5">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#00FF88] opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-[#00FF88]"></span>
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-500"></span>
               </span>
               <span>{project.status}</span>
             </span>
@@ -358,7 +358,7 @@ function ProjectCard({ project, variants }: { project: ProjectItem; variants: Va
         </p>
 
         {/* CARD BOTTOM: Information Grid */}
-        <div className="bg-white/[0.02] border border-white/5 rounded-2xl p-4 mb-6 space-y-3">
+        <div className="bg-white/[0.02] border border-white/5 rounded-xl p-3.5 sm:p-4 mb-6 space-y-3">
           <div className="grid grid-cols-2 gap-x-4 gap-y-3 text-xs">
             <div>
               <span className="text-[10px] font-mono text-zinc-500 block uppercase">Industry</span>
@@ -387,7 +387,7 @@ function ProjectCard({ project, variants }: { project: ProjectItem; variants: Va
               <span className="text-[10px] font-mono text-zinc-500 block uppercase mb-1">Technology</span>
               <div className="flex flex-wrap gap-1">
                 {project.technology.map((tech, idx) => (
-                  <span key={idx} className="text-[10px] font-mono text-[#00FF88] bg-[#00FF88]/5 border border-[#00FF88]/10 px-2 py-0.5 rounded">
+                  <span key={idx} className="text-[10px] font-mono text-emerald-300 bg-emerald-500/5 border border-emerald-500/10 px-2 py-0.5 rounded">
                     {tech}
                   </span>
                 ))}
@@ -403,14 +403,14 @@ function ProjectCard({ project, variants }: { project: ProjectItem; variants: Va
           href={project.link}
           target="_blank"
           rel="noopener noreferrer"
-          className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-[#00FF88]/10 hover:bg-[#00FF88] border border-[#00FF88]/30 hover:border-[#00FF88] text-[#00FF88] hover:text-black font-sans font-bold text-xs uppercase tracking-wider px-5 py-2.5 rounded-full transition-all duration-300 cursor-pointer shadow-[0_0_15px_rgba(0,255,136,0.15)] hover:shadow-[0_0_25px_rgba(0,255,136,0.4)]"
+          className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-emerald-500/10 hover:bg-emerald-500 border border-emerald-500/30 hover:border-emerald-500 text-emerald-400 hover:text-black font-sans font-bold text-xs uppercase tracking-wider px-5 py-2.5 rounded-full transition-all duration-300 cursor-pointer shadow-[0_0_15px_rgba(16,185,129,0.15)]"
         >
           <span>{project.buttonText}</span>
           <ExternalLink className="w-3.5 h-3.5" />
         </a>
 
         <div className="inline-flex items-center gap-1.5 text-[10px] font-mono text-zinc-500">
-          <CheckCircle2 className="w-3.5 h-3.5 text-[#00FF88]" />
+          <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
           <span>Built by IGRIS Tech</span>
         </div>
       </div>
